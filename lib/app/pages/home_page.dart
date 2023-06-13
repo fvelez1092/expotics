@@ -24,13 +24,12 @@ class HomePage extends GetView<HomeController> {
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft,
                   colors: [
-                    //Colors.white,
                     Color.fromRGBO(24, 159, 224, 1),
                     Color.fromRGBO(16, 27, 171, 1),
                     Color.fromRGBO(24, 159, 224, 1),
-                    //Colors.white,
                   ],
                 ),
+                //color: const Color.fromARGB(255, 24, 157, 223),
                 border: Border(
                   bottom:
                       BorderSide(width: 2, color: Colors.lightBlue.shade900),

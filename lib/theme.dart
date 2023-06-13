@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ColorsApp {
   static const greenLight = Color(0xFF1abc9c);
@@ -24,8 +23,8 @@ class ColorsApp {
 // final gradiantColorsR = [ColorsApp.blue, ColorsApp.dark];
 
 final lightTheme = ThemeData(
-  textTheme: GoogleFonts.robotoTextTheme(),
-  fontFamily: GoogleFonts.roboto().fontFamily,
+  // textTheme: GoogleFonts.robotoTextTheme(),
+  // fontFamily: GoogleFonts.roboto().fontFamily,
   colorScheme: const ColorScheme(
       primary: Color.fromRGBO(16, 115, 165, 1),
       primaryContainer: Color.fromRGBO(16, 27, 171, 1),
