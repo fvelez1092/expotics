@@ -1,9 +1,8 @@
-import 'package:expotics/app/pages/home_controller.dart';
+import 'package:expotics/app/pages/inscripciones/inscripciones_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
-class HomePage extends GetView<HomeController> {
+class InscripcionesPage extends GetView<InscripcionesController> {
   @override
   Widget build(BuildContext context) {
     //final claveFormulario = GlobalKey<FormState>();
@@ -24,12 +23,13 @@ class HomePage extends GetView<HomeController> {
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft,
                   colors: [
+                    //Colors.white,
                     Color.fromRGBO(24, 159, 224, 1),
                     Color.fromRGBO(16, 27, 171, 1),
                     Color.fromRGBO(24, 159, 224, 1),
+                    //Colors.white,
                   ],
                 ),
-                //color: const Color.fromARGB(255, 24, 157, 223),
                 border: Border(
                   bottom:
                       BorderSide(width: 2, color: Colors.lightBlue.shade900),
@@ -70,6 +70,15 @@ class HomePage extends GetView<HomeController> {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            const SizedBox(
+              child: Text(
+                "Registro de Asistencia",
+                style: TextStyle(color: Colors.blueAccent, fontSize: 25),
+              ),
+            ),
             Container(
               color: const Color.fromRGBO(255, 255, 255, 1),
               margin: EdgeInsets.symmetric(
@@ -100,25 +109,48 @@ class HomePage extends GetView<HomeController> {
                                 }
                               : null,
                           child: Text(
-                            "Inscribete",
+                            controller.isPreinscripcion.value
+                                ? "Confirmar"
+                                : "Inscribir",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: width < 374 ? 8 : 18),
                           ),
                         ),
                       )),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      const Text("Total de Asistentes: "),
+                      Obx(() =>
+                          Text(controller.totalAsistentes.value.toString())),
+                    ],
+                  ),
+                  SizedBox(
+                    height: height * 0.05,
+                    width: width < 420 ? width * 0.5 : width * 0.15,
+                    child: MaterialButton(
+                      shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
+                      color: Get.theme.colorScheme.primary,
+                      onPressed: () => controller.sorteo(),
+                      child: Text(
+                        "Sortear",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: width < 374 ? 8 : 18),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                 ],
               ),
             ),
-            Container(
-              width: width,
-              height: height * 0.44,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/participantes.png"),
-                    fit: BoxFit.fitWidth),
-              ),
-            )
           ],
         ),
       ),
@@ -132,7 +164,7 @@ class _formPerson extends StatelessWidget {
     required this.controller,
   });
 
-  final HomeController controller;
+  final InscripcionesController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -172,17 +204,19 @@ class _formPerson extends StatelessWidget {
             const SizedBox(
               width: 5,
             ),
-            Flexible(
-              child: _textField(
-                controller: controller.ctrlTelefono,
-                text: "Teléfono",
-              ),
-            ),
+            Obx(() => Flexible(
+                  child: _textField(
+                    controller: controller.ctrlCellPhone,
+                    text: "Teléfono",
+                    readonly: controller.isPreinscripcion.value ? true : false,
+                  ),
+                )),
           ],
         ),
         Obx(() => Container(
               margin: const EdgeInsets.symmetric(vertical: 10),
               child: TextFormField(
+                readOnly: controller.isPreinscripcion.value ? true : false,
                 //onChanged: controller.validateEmail(),
                 controller: controller.ctrlCorreo,
                 decoration: InputDecoration(
@@ -206,25 +240,27 @@ class _formPerson extends StatelessWidget {
                     fillColor: Colors.white70),
               ),
             )),
-        Row(
-          children: [
-            Flexible(
-              child: _textField(
-                controller: controller.ctrlInstitucion,
-                text: "Institución",
-              ),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Flexible(
-              child: _textField(
-                controller: controller.ctrlCargo,
-                text: "Cargo",
-              ),
-            ),
-          ],
-        ),
+        Obx(() => Row(
+              children: [
+                Flexible(
+                  child: _textField(
+                    controller: controller.ctrlInstitucion,
+                    text: "Institución",
+                    readonly: controller.isPreinscripcion.value ? true : false,
+                  ),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                Flexible(
+                  child: _textField(
+                    controller: controller.ctrlCargo,
+                    text: "Cargo",
+                    readonly: controller.isPreinscripcion.value ? true : false,
+                  ),
+                ),
+              ],
+            )),
       ],
     );
   }
@@ -236,7 +272,7 @@ class _cedulaTextForm extends StatelessWidget {
     required this.controller,
   });
 
-  final HomeController controller;
+  final InscripcionesController controller;
 
   @override
   Widget build(BuildContext context) {

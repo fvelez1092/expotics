@@ -1,5 +1,6 @@
 // ignore_for_file: unrelated_type_equality_checks
 
+import 'package:expotics/app/models/person_model.dart';
 import 'package:expotics/app/responses/person_response.dart';
 import 'package:expotics/app/services/auth_services.dart';
 import 'package:flutter/material.dart';
@@ -20,16 +21,6 @@ class HomeController extends GetxController {
   TextEditingController ctrlTelefono = TextEditingController();
 
   RxBool ifperson = false.obs;
-
-  void loadPerson2(title) {
-    Get.snackbar(
-      title,
-      "Display the message here",
-      colorText: Colors.white,
-      backgroundColor: Colors.lightBlue,
-      icon: const Icon(Icons.add_alert),
-    );
-  }
 
   validateEmail() {
     print("hay que validar el correo");
@@ -52,7 +43,6 @@ class HomeController extends GetxController {
           await AuthenticationService.getPerson(ctrlCedula.text.trim());
       if (response != null) {
         personResponse = response;
-        //print("esta es la respuesta");
         print(personResponse.toString());
         person = personResponse.person;
         ifperson.value = true;

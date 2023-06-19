@@ -1,4 +1,4 @@
-import 'package:expotics/app/pages/home_controller.dart';
+import 'package:expotics/app/pages/preinscripciones/home_controller.dart';
 import 'package:get/get.dart';
 
 class HomeBinding extends Bindings {
